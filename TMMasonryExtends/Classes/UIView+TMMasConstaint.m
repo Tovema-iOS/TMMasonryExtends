@@ -24,25 +24,48 @@
 
 @implementation UIView (TMMasConstaint)
 
-- (NSArray *)tm_autoInstallConstraints
+- (NSArray *)tm_autoInstallWhenShowConstraints
 {
     return objc_getAssociatedObject(self, _cmd);
 }
 
-- (void)setTm_autoInstallConstraints:(NSArray<MASConstraint *> *)constrains
+- (void)setTm_autoInstallWhenShowConstraints:(NSArray<MASConstraint *> *)constrains
 {
-    objc_setAssociatedObject(self, @selector(tm_autoInstallConstraints), constrains, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(tm_autoInstallWhenShowConstraints), constrains, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (void)tm_addAutoInstallConstraint:(MASConstraint *)constraint
+- (void)tm_addAutoInstallWhenShowConstraints:(MASConstraint *)constraint
 {
     if (!constraint) {
         return;
     }
 
-    NSMutableArray *array = (self.tm_autoInstallConstraints ?: @[]).mutableCopy;
+    NSMutableArray *array = (self.tm_autoInstallWhenShowConstraints ?: @[]).mutableCopy;
     [array addObject:constraint];
-    self.tm_autoInstallConstraints = array;
+    self.tm_autoInstallWhenShowConstraints = array;
+    
+    [constraint tm_checkInstallViewHidden:self.hidden];
+}
+
+- (NSArray *)tm_autoInstallWhenHiddenConstraints
+{
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setTm_autoInstallWhenHiddenConstraints:(NSArray<MASConstraint *> *)tm_autoInstallWhenHiddenConstraints
+{
+    objc_setAssociatedObject(self, @selector(tm_autoInstallWhenHiddenConstraints), tm_autoInstallWhenHiddenConstraints, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (void)tm_addAutoInstallWhenHiddenConstraints:(MASConstraint *)constraint
+{
+    if (!constraint) {
+        return;
+    }
+    
+    NSMutableArray *array = (self.tm_autoInstallWhenHiddenConstraints ?: @[]).mutableCopy;
+    [array addObject:constraint];
+    self.tm_autoInstallWhenHiddenConstraints = array;
     
     [constraint tm_checkInstallViewHidden:self.hidden];
 }
@@ -83,8 +106,25 @@
         [cst tm_updateConstantViewHidden:self.hidden];
     }
     
-    for (MASConstraint *cst in self.tm_autoInstallConstraints) {
-        [cst tm_checkInstallViewHidden:self.hidden];
+    /* 这里需要区分 hidden 情况
+     * 保证先卸载旧的约束，再安装新的约束，避免系统控制台报警
+     */
+    if (self.hidden) {
+        for (MASConstraint *cst in self.tm_autoInstallWhenShowConstraints) {
+            [cst tm_checkInstallViewHidden:self.hidden];
+        }
+        
+        for (MASConstraint *cst in self.tm_autoInstallWhenHiddenConstraints) {
+            [cst tm_checkInstallViewHidden:self.hidden];
+        }
+    } else {
+        for (MASConstraint *cst in self.tm_autoInstallWhenHiddenConstraints) {
+            [cst tm_checkInstallViewHidden:self.hidden];
+        }
+        
+        for (MASConstraint *cst in self.tm_autoInstallWhenShowConstraints) {
+            [cst tm_checkInstallViewHidden:self.hidden];
+        }
     }
 }
 

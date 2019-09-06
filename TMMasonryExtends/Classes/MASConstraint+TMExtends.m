@@ -25,7 +25,7 @@
 {
     return ^id(UIView *view) {
         self._tm_installWhenHiddenFlag = YES;
-        [view tm_addAutoInstallConstraint:self];
+        [view tm_addAutoInstallWhenHiddenConstraints:self];
         
         return self;
     };
@@ -35,7 +35,7 @@
 {
     return ^id(UIView *view) {
         self._tm_installWhenShowFlag = YES;
-        [view tm_addAutoInstallConstraint:self];
+        [view tm_addAutoInstallWhenShowConstraints:self];
         
         return self;
     };
