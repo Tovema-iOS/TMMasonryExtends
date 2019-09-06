@@ -8,9 +8,39 @@ TMMasonryExtends 是一个 Masonry 扩展库，可以用它为视图显示和隐
 
 ## Usage
 
+引入头文件
+
 ``` objc
 #import <TMMasonryExtends/TMMasonryExtends.h>
+```
 
+Masonry 扩展接口
+
+``` objc
+@interface MASConstraint (TMExtends)
+
+/**
+ view 隐藏时自动将约束值设置为 0，显示时恢复原值
+ */
+- (MASConstraint * (^)(UIView *view))tm_collapseWhenHidden;
+
+/**
+ view 隐藏时安装此约束，反之卸载
+ */
+- (MASConstraint * (^)(UIView *view))tm_installWhenHidden;
+
+/**
+ view 显示时安装此约束，反之卸载
+ */
+- (MASConstraint * (^)(UIView *view))tm_installWhenShow;
+
+@end
+```
+
+示例
+
+``` objc
+#import <TMMasonryExtends/TMMasonryExtends.h>
 
 [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
     // self.imageView 隐藏时，顶部间距自动设置为 0
@@ -28,16 +58,12 @@ TMMasonryExtends 是一个 Masonry 扩展库，可以用它为视图显示和隐
 
 iOS 8.0
 
-
 ## Installation
 
 TMMasonryExtends is available through [CocoaPods](https://cocoapods.org). To install it, simply add the following line to your Podfile:
 
 ```ruby
-source 'https://github.com/Tovema-iOS/Specs.git'
-source 'https://github.com/CocoaPods/Specs.git'
-
-pod 'TMMasonryExtends', '~> 0.1.0'
+pod 'TMMasonryExtends', '~> 1.0'
 ```
 
 ## Author
