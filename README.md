@@ -1,8 +1,10 @@
 # TMMasonryExtends
 
-TMMasonryExtends 是一个 Masonry 扩展库，可以用它为视图显示和隐藏状态设置不同的约束。
+TMMasonryExtends 是一个 [Masonry](https://github.com/SnapKit/Masonry) 扩展库，可以用它为视图显示和隐藏状态设置不同的约束。
 
 封装这个库主要是为了解决视图显示、隐藏的时候引入的大量条件判断和约束变更的代码。
+
+效果图：
 
 ![预览图](./Doc/imgs/preview.png)
 
@@ -72,4 +74,4 @@ lxb_0605@qq.com
 
 ## License
 
-TMMasonryExtends is available under the MIT license. See the LICENSE file for more info.
+TMMasonryExtends is available under the MIT license. See the [LICENSE](LICENSE) file for more info.
