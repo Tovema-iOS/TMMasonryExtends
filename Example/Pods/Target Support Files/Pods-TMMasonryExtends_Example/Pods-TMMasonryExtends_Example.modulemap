@@ -1,0 +1,6 @@
+framework module Pods_TMMasonryExtends_Example {
+  umbrella header "Pods-TMMasonryExtends_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}

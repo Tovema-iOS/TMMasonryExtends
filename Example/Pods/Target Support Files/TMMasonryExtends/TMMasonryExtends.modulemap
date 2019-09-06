@@ -1,0 +1,6 @@
+framework module TMMasonryExtends {
+  umbrella header "TMMasonryExtends-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -8,35 +8,20 @@
 
 Pod::Spec.new do |s|
   s.name             = 'TMMasonryExtends'
-  s.version          = '0.1.0'
-  s.summary          = 'A short description of TMMasonryExtends.'
+  s.version          = '1.0'
+  s.summary          = 'Masonry 扩展库，可以用它为视图显示和隐藏状态设置不同的约束。'
 
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!
-
-  s.description      = <<-DESC
-TODO: Add long description of the pod here.
-                       DESC
+  s.description      = "TMMasonryExtends 是一个 Masonry 扩展库，可以用它为视图显示和隐藏状态设置不同的约束。封装这个库主要是为了解决视图显示、隐藏的时候引入的大量条件判断和约束变更的代码。"
 
   s.homepage         = 'https://github.com/Tovema-iOS/TMMasonryExtends'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'lxb_0605@qq.com' => 'lxb_0605@qq.com' }
   s.source           = { :git => 'https://github.com/Tovema-iOS/TMMasonryExtends.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '8.0'
 
   s.source_files = 'TMMasonryExtends/Classes/**/*'
   
-  # s.resource_bundles = {
-  #   'TMMasonryExtends' => ['TMMasonryExtends/Assets/*.png']
-  # }
-
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.dependency 'Masonry', '~> 1.1'
 end
