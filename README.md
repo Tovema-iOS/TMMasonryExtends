@@ -8,6 +8,23 @@ TMMasonryExtends 是一个 [Masonry](https://github.com/SnapKit/Masonry) 扩展�
 
 ![预览图](./Doc/imgs/preview.png)
 
+示例代码
+
+``` objc
+#import <TMMasonryExtends/TMMasonryExtends.h>
+
+[self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+    // self.imageView 隐藏时，顶部间距自动设置为 0
+    make.top.equalTo(self.btnToggle.mas_bottom).offset(50).tm_collapseWhenHidden(self.imageView);
+    // self.imageView 隐藏时，高度设置为 0
+    make.height.mas_equalTo(0).tm_installWhenHidden(self.imageView);
+    // self.imageView 显示时，高度设置为 120
+    make.height.mas_equalTo(120).tm_installWhenShow(self.imageView);
+    make.width.equalTo(self.imageView.mas_height);
+    make.centerX.mas_offset(0);
+}];
+```
+
 ## Usage
 
 引入头文件
@@ -39,27 +56,6 @@ Masonry 扩展接口
 @end
 ```
 
-示例
-
-``` objc
-#import <TMMasonryExtends/TMMasonryExtends.h>
-
-[self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-    // self.imageView 隐藏时，顶部间距自动设置为 0
-    make.top.equalTo(self.btnToggle.mas_bottom).offset(50).tm_collapseWhenHidden(self.imageView);
-    // self.imageView 隐藏时，高度设置为 0
-    make.height.mas_equalTo(0).tm_installWhenHidden(self.imageView);
-    // self.imageView 显示时，高度设置为 120
-    make.height.mas_equalTo(120).tm_installWhenShow(self.imageView);
-    make.width.equalTo(self.imageView.mas_height);
-    make.centerX.mas_offset(0);
-}];
-```
-
-## Requirements
-
-iOS 8.0
-
 ## Installation
 
 TMMasonryExtends is available through [CocoaPods](https://cocoapods.org). To install it, simply add the following line to your Podfile:
@@ -67,6 +63,10 @@ TMMasonryExtends is available through [CocoaPods](https://cocoapods.org). To ins
 ```ruby
 pod 'TMMasonryExtends', '~> 1.0'
 ```
+
+## Requirements
+
+iOS 8.0
 
 ## Author
 
