@@ -51,7 +51,7 @@ Masonry 扩展接口
     make.height.mas_equalTo(0).tm_installWhenHidden(self.imageView);
     // self.imageView 显示时，高度设置为 120
     make.height.mas_equalTo(120).tm_installWhenShow(self.imageView);
-    make.height.with.equalTo(self.imageView.mas_width);
+    make.width.equalTo(self.imageView.mas_height);
     make.centerX.mas_offset(0);
 }];
 ```
