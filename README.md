@@ -61,7 +61,7 @@ Masonry 扩展接口
 TMMasonryExtends is available through [CocoaPods](https://cocoapods.org). To install it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'TMMasonryExtends', '~> 1.0'
+pod 'TMMasonryExtends', '~> 1.1'
 ```
 
 ## Requirements

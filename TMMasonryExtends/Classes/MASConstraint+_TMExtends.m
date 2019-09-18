@@ -32,7 +32,7 @@
 
 - (void)set_tm_originalConstant:(CGFloat)originalConstant
 {
-    objc_setAssociatedObject(self, @selector(_tm_originalConstant), @(originalConstant), OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, @selector(_tm_originalConstant), @(originalConstant), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (BOOL)_tm_installWhenHiddenFlag
@@ -42,7 +42,7 @@
 
 - (void)set_tm_installWhenHiddenFlag:(BOOL)tm_installWhenHiddenFlag
 {
-    objc_setAssociatedObject(self, @selector(_tm_installWhenHiddenFlag), @(tm_installWhenHiddenFlag), OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, @selector(_tm_installWhenHiddenFlag), @(tm_installWhenHiddenFlag), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (BOOL)_tm_installWhenShowFlag
@@ -52,7 +52,7 @@
 
 - (void)set_tm_installWhenShowFlag:(BOOL)tm_installWhenShowFlag
 {
-    objc_setAssociatedObject(self, @selector(_tm_installWhenShowFlag), @(tm_installWhenShowFlag), OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, @selector(_tm_installWhenShowFlag), @(tm_installWhenShowFlag), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (BOOL)_tm_viewHidden
@@ -62,7 +62,7 @@
 
 - (void)set_tm_viewHidden:(BOOL)tm_viewHidden
 {
-    objc_setAssociatedObject(self, @selector(_tm_viewHidden), @(tm_viewHidden), OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, @selector(_tm_viewHidden), @(tm_viewHidden), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (void)tm_updateConstantViewHidden:(BOOL)hidden
