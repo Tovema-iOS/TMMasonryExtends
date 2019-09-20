@@ -17,6 +17,7 @@
 @property (nonatomic, strong) UIButton *btnToggle;
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UILabel *lbMore;
+@property (nonatomic, strong) UIButton *btnUpdate;
 
 @end
 
@@ -37,7 +38,8 @@
     [self.view addSubview:self.btnToggle];
     [self.view addSubview:self.imageView];
     [self.view addSubview:self.lbMore];
-    
+    [self.view addSubview:self.btnUpdate];
+
     [self.imageView cyl_willDeallocWithSelfCallback:^(__unsafe_unretained id owner, NSUInteger identifier) {
         NSLog(@"%@ dealloc", owner);
     }];
@@ -72,6 +74,11 @@
     
     [self.lbMore mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.imageView.mas_bottom).offset(20);
+        make.centerX.mas_offset(0);
+    }];
+    
+    [self.btnUpdate mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.lbMore.mas_bottom).offset(40);
         make.centerX.mas_offset(0);
     }];
 }
@@ -122,6 +129,17 @@
     return _lbMore;
 }
 
+- (UIButton *)btnUpdate
+{
+    if (!_btnUpdate) {
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
+        [button setTitle:@"Update" forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(onUpdate:) forControlEvents:UIControlEventTouchUpInside];
+        _btnUpdate = button;
+    }
+    return _btnUpdate;
+}
+
 #pragma mark - actions
 - (void)onToggleAction:(UIButton *)button
 {
@@ -129,6 +147,15 @@
     
     NSString *title = self.imageView.hidden ? @"Expand" : @"Collapse";
     [self.btnToggle setTitle:title forState:UIControlStateNormal];
+}
+
+- (void)onUpdate:(UIButton *)button
+{
+    [self.imageView mas_updateConstraints:^(MASConstraintMaker *make) {
+        static int add = 0;
+        add += 20;
+        make.height.mas_equalTo(120 + add).tm_installWhenShow(self.imageView);
+    }];
 }
 
 @end

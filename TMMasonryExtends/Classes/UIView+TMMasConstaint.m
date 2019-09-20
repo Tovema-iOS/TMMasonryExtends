@@ -29,22 +29,32 @@
     return objc_getAssociatedObject(self, _cmd);
 }
 
-- (void)setTm_autoInstallWhenShowConstraints:(NSArray<MASConstraint *> *)constrains
+- (void)setTm_autoInstallWhenShowConstraints:(NSArray *)constrains
 {
     objc_setAssociatedObject(self, @selector(tm_autoInstallWhenShowConstraints), constrains, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (void)tm_addAutoInstallWhenShowConstraints:(MASConstraint *)constraint
 {
-    if (!constraint) {
+    if (![constraint isKindOfClass:[MASViewConstraint class]]) {
         return;
     }
 
     NSMutableArray *array = (self.tm_autoInstallWhenShowConstraints ?: @[]).mutableCopy;
-    [array addObject:constraint];
+    [self tm_contraints:array addConstraints:(MASViewConstraint *)constraint];
     self.tm_autoInstallWhenShowConstraints = array;
     
     [constraint tm_checkInstallViewHidden:self.hidden];
+}
+
+- (void)tm_contraints:(NSMutableArray *)constraints addConstraints:(MASViewConstraint *)constraint
+{
+    for (MASViewConstraint *existingConstraint in constraints.reverseObjectEnumerator) {
+        if ([existingConstraint tm_layoutConstraintSimilarTo:constraint]) {
+            [constraints removeObject:existingConstraint];
+        }
+    }
+    [constraints addObject:constraint];
 }
 
 - (NSArray *)tm_autoInstallWhenHiddenConstraints
@@ -52,19 +62,19 @@
     return objc_getAssociatedObject(self, _cmd);
 }
 
-- (void)setTm_autoInstallWhenHiddenConstraints:(NSArray<MASConstraint *> *)tm_autoInstallWhenHiddenConstraints
+- (void)setTm_autoInstallWhenHiddenConstraints:(NSArray *)tm_autoInstallWhenHiddenConstraints
 {
     objc_setAssociatedObject(self, @selector(tm_autoInstallWhenHiddenConstraints), tm_autoInstallWhenHiddenConstraints, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (void)tm_addAutoInstallWhenHiddenConstraints:(MASConstraint *)constraint
 {
-    if (!constraint) {
+    if (![constraint isKindOfClass:[MASViewConstraint class]]) {
         return;
     }
     
     NSMutableArray *array = (self.tm_autoInstallWhenHiddenConstraints ?: @[]).mutableCopy;
-    [array addObject:constraint];
+    [self tm_contraints:array addConstraints:(MASViewConstraint *)constraint];
     self.tm_autoInstallWhenHiddenConstraints = array;
     
     [constraint tm_checkInstallViewHidden:self.hidden];
@@ -75,19 +85,19 @@
     return objc_getAssociatedObject(self, @selector(tm_collapseWhenHidden));
 }
 
-- (void)setTm_collapseWhenHidden:(NSArray<MASConstraint *> *)constrains
+- (void)setTm_collapseWhenHidden:(NSArray *)constrains
 {
     objc_setAssociatedObject(self, @selector(tm_collapseWhenHidden), constrains, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (void)tm_addAutoCollapseWhenHidden:(MASConstraint *)constraint
 {
-    if (!constraint) {
+    if (![constraint isKindOfClass:[MASViewConstraint class]]) {
         return;
     }
 
     NSMutableArray *array = (self.tm_collapseWhenHidden ?: @[]).mutableCopy;
-    [array addObject:constraint];
+    [self tm_contraints:array addConstraints:(MASViewConstraint *)constraint];
     self.tm_collapseWhenHidden = array;
     
     [constraint tm_updateConstantViewHidden:self.hidden];

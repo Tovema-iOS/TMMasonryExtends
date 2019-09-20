@@ -24,6 +24,7 @@
 @implementation MASConstraint (_TMExtends)
 @dynamic layoutConstant;
 @dynamic hasBeenInstalled;
+@dynamic updateExisting;
 
 - (CGFloat)_tm_originalConstant
 {
@@ -75,8 +76,10 @@
     self._tm_viewHidden = hidden;
     
     if (self._tm_installWhenHiddenFlag && self._tm_viewHidden) {
+        self.updateExisting = YES;
         [self install];
     } else if (self._tm_installWhenShowFlag && !self._tm_viewHidden) {
+        self.updateExisting = YES;
         [self install];
     } else if (self._tm_installWhenShowFlag || self._tm_installWhenHiddenFlag) {
         [self tm_tryUninstall];
@@ -99,7 +102,37 @@
 @end
 
 
+@interface MASLayoutConstraint (TMExtends)
+
+- (BOOL)tm_layoutConstraintSimilarTo:(MASLayoutConstraint *)layoutConstraint;
+
+@end
+
+@implementation MASLayoutConstraint (TMExtends)
+
+- (BOOL)tm_layoutConstraintSimilarTo:(MASLayoutConstraint *)existingConstraint {
+    MASLayoutConstraint *layoutConstraint = self;
+
+    if (![existingConstraint isKindOfClass:MASLayoutConstraint.class]) return NO;
+    if (existingConstraint.firstItem != layoutConstraint.firstItem) return NO;
+    if (existingConstraint.secondItem != layoutConstraint.secondItem) return NO;
+    if (existingConstraint.firstAttribute != layoutConstraint.firstAttribute) return NO;
+    if (existingConstraint.secondAttribute != layoutConstraint.secondAttribute) return NO;
+    if (existingConstraint.relation != layoutConstraint.relation) return NO;
+    if (existingConstraint.multiplier != layoutConstraint.multiplier) return NO;
+    if (existingConstraint.priority != layoutConstraint.priority) return NO;
+
+    return YES;
+}
+
+@end
+
+
 @implementation MASViewConstraint (_TMExtends)
+@dynamic layoutConstraint;
+@dynamic layoutPriority;
+@dynamic layoutRelation;
+@dynamic layoutMultiplier;
 
 + (void)load
 {
@@ -117,6 +150,45 @@
     } else {
         [self tm_install];
     }
+}
+
+- (BOOL)tm_layoutConstraintSimilarTo:(MASViewConstraint *)constraint
+{
+    MASLayoutConstraint *selfLayoutConstraint = [self tm_layoutConstraint];
+    MASLayoutConstraint *otherLayoutConstraint = [constraint tm_layoutConstraint];
+    return [selfLayoutConstraint tm_layoutConstraintSimilarTo:otherLayoutConstraint];
+}
+
+- (MASLayoutConstraint *)tm_layoutConstraint
+{
+    if (self.layoutConstraint) {
+        return self.layoutConstraint;
+    }
+    
+    MAS_VIEW *firstLayoutItem = self.firstViewAttribute.item;
+    NSLayoutAttribute firstLayoutAttribute = self.firstViewAttribute.layoutAttribute;
+    MAS_VIEW *secondLayoutItem = self.secondViewAttribute.item;
+    NSLayoutAttribute secondLayoutAttribute = self.secondViewAttribute.layoutAttribute;
+
+    // alignment attributes must have a secondViewAttribute
+    // therefore we assume that is refering to superview
+    // eg make.left.equalTo(@10)
+    if (!self.firstViewAttribute.isSizeAttribute && !self.secondViewAttribute) {
+        secondLayoutItem = self.firstViewAttribute.view.superview;
+        secondLayoutAttribute = firstLayoutAttribute;
+    }
+    
+    MASLayoutConstraint *layoutConstraint
+        = [MASLayoutConstraint constraintWithItem:firstLayoutItem
+                                        attribute:firstLayoutAttribute
+                                        relatedBy:self.layoutRelation
+                                           toItem:secondLayoutItem
+                                        attribute:secondLayoutAttribute
+                                       multiplier:self.layoutMultiplier
+                                         constant:self.layoutConstant];
+    
+    layoutConstraint.priority = self.layoutPriority;
+    return layoutConstraint;
 }
 
 @end

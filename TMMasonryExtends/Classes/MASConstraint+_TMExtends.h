@@ -11,6 +11,7 @@
 
 @property (nonatomic, assign) CGFloat layoutConstant;
 @property (nonatomic, assign, readonly) BOOL hasBeenInstalled;
+@property (nonatomic, assign) BOOL updateExisting;
 
 @property (nonatomic, assign) CGFloat _tm_originalConstant;
 @property (nonatomic, assign) BOOL _tm_installWhenHiddenFlag;
@@ -19,5 +20,17 @@
 
 - (void)tm_updateConstantViewHidden:(BOOL)hidden;
 - (void)tm_checkInstallViewHidden:(BOOL)hidden;
+
+@end
+
+
+@interface MASViewConstraint (_TMExtends)
+
+@property (nonatomic, weak) MASLayoutConstraint *layoutConstraint;
+@property (nonatomic, assign) NSLayoutRelation layoutRelation;
+@property (nonatomic, assign) MASLayoutPriority layoutPriority;
+@property (nonatomic, assign) CGFloat layoutMultiplier;
+
+- (BOOL)tm_layoutConstraintSimilarTo:(MASViewConstraint *)constraint;
 
 @end

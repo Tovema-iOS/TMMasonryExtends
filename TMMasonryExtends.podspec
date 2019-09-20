@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'TMMasonryExtends'
-  s.version          = '1.1'
+  s.version          = '1.2'
   s.summary          = 'Masonry 扩展库，可以用它为视图显示和隐藏状态设置不同的约束。'
 
   s.description      = "TMMasonryExtends 是一个 Masonry 扩展库，可以用它为视图显示和隐藏状态设置不同的约束。封装这个库主要是为了解决视图显示、隐藏的时候引入的大量条件判断和约束变更的代码。"
