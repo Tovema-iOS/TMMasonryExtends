@@ -12,6 +12,8 @@
 @property (nonatomic, assign) CGFloat layoutConstant;
 @property (nonatomic, assign, readonly) BOOL hasBeenInstalled;
 @property (nonatomic, assign) BOOL updateExisting;
+@property (nonatomic, strong) NSMutableArray *childConstraints;
+
 
 @property (nonatomic, assign) CGFloat _tm_originalConstant;
 @property (nonatomic, assign) BOOL _tm_installWhenHiddenFlag;

@@ -61,6 +61,7 @@
         make.centerX.mas_offset(0);
     }];
     
+    /*
     [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
         // self.imageView 隐藏时，顶部间距自动设置为 0
         make.top.equalTo(self.btnToggle.mas_bottom).offset(50).tm_collapseWhenHidden(self.imageView);
@@ -69,6 +70,15 @@
         // self.imageView 显示时，高度设置为 120
         make.height.mas_equalTo(120).tm_installWhenShow(self.imageView);
         make.width.equalTo(self.imageView.mas_height);
+        make.centerX.mas_offset(0);
+    }];
+     */
+    // UPDATE:
+    [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        // self.imageView 隐藏时，顶部间距自动设置为 0
+        make.top.equalTo(self.btnToggle.mas_bottom).offset(50).tm_collapseWhenHidden(self.imageView);
+        // self.imageView 隐藏时，width和height间距自动设置为 0
+        make.width.height.equalTo(@120).tm_collapseWhenHidden(self.imageView);
         make.centerX.mas_offset(0);
     }];
     

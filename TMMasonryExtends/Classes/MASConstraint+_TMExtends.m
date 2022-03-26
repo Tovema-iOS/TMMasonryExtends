@@ -25,6 +25,7 @@
 @dynamic layoutConstant;
 @dynamic hasBeenInstalled;
 @dynamic updateExisting;
+@dynamic childConstraints;
 
 - (CGFloat)_tm_originalConstant
 {
